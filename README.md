@@ -8,5 +8,3 @@ Inspired by [create react app](https://github.com/facebook/create-react-app), qu
 - jest (with babel for parsing `import` statements)
 - tsconfig
 - create-react-app for react projects
-
-All config files are stored inside of a `.config` folder for a cleaner project.
