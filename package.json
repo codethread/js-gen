@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "major-release": "npm version major && npm publish && git push --follow-tags"
   },
   "bin": {
     "@ahdesigns/js-gen": "bin/create",
