@@ -4,8 +4,8 @@
   "description": "Scaffold a js or ts project",
   "main": "src/index.js",
   "scripts": {
-    "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "major-release": "npm version major && npm publish && git push --follow-tags"
+    "patch": "npm version patch && npm publish && git push --follow-tags",
+    "major": "npm version major && npm publish && git push --follow-tags"
   },
   "bin": {
     "@ahdesigns/js-gen": "bin/create",
