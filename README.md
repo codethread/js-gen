@@ -2,6 +2,20 @@
 
 Javascript/ Typescript boilerplate generator for node and/or react projects.
 
+## Installation
+```bash
+$ npm i -g create-react-app
+$ npm i -g @ahdesigns/js-gen
+```
+
+## Usage
+```bash
+$ js-gen
+# follow the prompts
+```
+
+## About
+
 Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with an opinionated setup including:  
 - eslint (with optional typescript support)
 - prettier
