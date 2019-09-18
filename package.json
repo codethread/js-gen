@@ -1,6 +1,6 @@
 {
   "name": "@ahdesigns/js-gen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Scaffold a js or ts project",
   "main": "src/index.js",
   "repository": "ahdesigns/js-gen",
@@ -10,9 +10,9 @@
   "scripts": {
     "publish": "npm publish && git push --follow-tags",
     "prepublish": "cat ~/.gitignore_global > .npmignore && cat ./.gitignore >> .npmignore",
-    "patch": "npm version patch && npm:publish",
-    "minor": "npm version minor && npm:publish",
-    "major": "npm version major && npm:publish"
+    "patch": "npm version patch && npm run publish",
+    "minor": "npm version minor && npm run publish",
+    "major": "npm version major && npm run publish"
   },
   "bin": {
     "@ahdesigns/js-gen": "bin/create",
