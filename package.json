@@ -8,11 +8,11 @@
     "node": "^8.12.0 || >=9.7.0"
   },
   "scripts": {
-    "publish": "npm publish && git push --follow-tags",
+    "publish-npm": "npm publish && git push --follow-tags",
     "prepublish": "cat ~/.gitignore_global > .npmignore && cat ./.gitignore >> .npmignore",
-    "patch": "npm version patch && npm run publish",
-    "minor": "npm version minor && npm run publish",
-    "major": "npm version major && npm run publish"
+    "patch": "npm version patch && npm run publish-npm",
+    "minor": "npm version minor && npm run publish-npm",
+    "major": "npm version major && npm run publish-npm"
   },
   "bin": {
     "@ahdesigns/js-gen": "bin/create",
