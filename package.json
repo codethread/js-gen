@@ -8,8 +8,11 @@
     "node": "^8.12.0 || >=9.7.0"
   },
   "scripts": {
-    "patch": "npm version patch && npm publish && git push --follow-tags",
-    "major": "npm version major && npm publish && git push --follow-tags"
+    "publish": "npm publish && git push --follow-tags",
+    "prepublish": "cat ~/.gitignore_global > .npmignore && cat ./.gitignore >> .npmignore",
+    "patch": "npm version patch && npm:publish",
+    "minor": "npm version minor && npm:publish",
+    "major": "npm version major && npm:publish"
   },
   "bin": {
     "@ahdesigns/js-gen": "bin/create",
@@ -23,11 +26,6 @@
     "boilerplate",
     "generator",
     "scaffold"
-  ],
-  "files": [
-    "bin/",
-    "src/",
-    "templates/"
   ],
   "author": "AHDesigns",
   "license": "MIT",
