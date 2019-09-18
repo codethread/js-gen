@@ -10,13 +10,20 @@ $ npm i -g @ahdesigns/js-gen
 
 ## Usage
 ```bash
+# navigate to the parent directory where you want your project to live, e.g:
+$ cd ~/
+
+# run the generator command:
 $ js-gen
-# follow the prompts
+
+# follow the prompts (including giving your project a name)
+# once complete, you can cd into your newly created project directory, e.g:
+$ cd name-of-project
 ```
 
 ## About
 
-Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with an opinionated setup including:  
+Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with an opinionated setup including:
 - eslint (with optional typescript support)
 - prettier
 - jest (with babel for parsing `import` statements)
