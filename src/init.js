@@ -16,18 +16,19 @@ export async function init(options_raw) {
   const lang = options_raw.language.toLowerCase()
 
   const options = { ...options_raw, title: cwd, project, lang };
-
-  const configFromOptions = `${project}/${lang}`
+  const copyFiles = copyTemplateFiles(cwd);
 
   try {
-    const copyFiles = copyTemplateFiles(cwd);
 
     project === 'react' && await createReactApp(options)
+    project === 'node' && await packageJson(options);
+
     await copyFiles(getTemplates('common'));
-    await copyFiles(getTemplates(configFromOptions));
+    await copyFiles(getTemplates(`${project}/common`));
+    await copyFiles(getTemplates(`${project}/${lang}`));
+
     await git(cwd);
     await nodeVersion(options);
-    project === 'node' && await packageJson(options);
     await dependencies(options);
 
     console.log('%s Project ready', chalk.green.bold('DONE'));
