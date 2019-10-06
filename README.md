@@ -26,6 +26,6 @@ $ cd name-of-project
 Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with an opinionated setup including:
 - eslint (with optional typescript support)
 - prettier
-- jest (with babel for parsing `import` statements)
+- jest (with `ts-jest` for typescript)
 - tsconfig
 - create-react-app for react projects
