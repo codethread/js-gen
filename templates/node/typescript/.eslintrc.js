@@ -11,6 +11,7 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   rules: {
+    'default-case': 'off',
     'no-var': 'off',
     'vars-on-top': 'off',
     'func-names': 'off',
@@ -28,6 +29,13 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      alias: {
+        map: [
+          // For path aliases, add to tsconfig, package.json and eslintrc...
+          ['@utils', './src/utils']
+        ],
+        extensions: ['.js', '.ts']
+      },
       node: {
         extensions: ['.js', '.ts']
       }

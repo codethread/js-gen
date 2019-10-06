@@ -15,23 +15,34 @@ export async function init(options_raw) {
   const project = options_raw.project.toLowerCase()
   const lang = options_raw.language.toLowerCase()
 
-  const options = { ...options_raw, title: cwd, project, lang };
-  const copyFiles = copyTemplateFiles(cwd);
+  const options = { ...options_raw, cwd, project, lang };
+
+  options.logger.info('cwd', cwd);
+  options.logger.info('project', project);
+  options.logger.info('lang', lang);
+
+  const copyFiles = copyTemplateFiles(options);
 
   try {
+    options.logger.info('creating dir: ', cwd);
+
+    await fs.promises.mkdir(cwd, { recursive: true });
 
     project === 'react' && await createReactApp(options)
     project === 'node' && await packageJson(options);
 
+    options.logger.info('copying files...');
     await copyFiles(getTemplates('common'));
     await copyFiles(getTemplates(`${project}/common`));
     await copyFiles(getTemplates(`${project}/${lang}`));
 
-    await git(cwd);
+    await git(options);
     await nodeVersion(options);
     await dependencies(options);
 
     console.log('%s Project ready', chalk.green.bold('DONE'));
+    console.log(chalk.cyan(`cd ${cwd}`));
+    console.log(chalk.cyan('yarn dev'));
 
   } catch(e) {
     console.error(e);
@@ -42,8 +53,12 @@ export async function init(options_raw) {
 // utils
 // --------------------------------------------
 
-function copyTemplateFiles(target) {
-  return template => promisify(ncp)(template, target, { clobber: true });
+function copyTemplateFiles({ cwd: target, logger }) {
+  return template => {
+    logger.info('creating template: ', template);
+    logger.info('in target', target);
+    return promisify(ncp)(template, target, { clobber: true });
+  }
 }
 
 function getTemplates(dir) {

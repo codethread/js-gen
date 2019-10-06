@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "outDir": "./dist/",
     "strict": true,
     "sourceMap": true,
@@ -7,13 +8,18 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["src/utils/*"]
+    }
   },
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
-    "test/"
+    "test/",
+    "src/**/*.spec.ts"
   ]
 }

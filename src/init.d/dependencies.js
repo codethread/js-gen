@@ -3,7 +3,8 @@ import execa from 'execa';
 
 export default dependencies;
 
-async function dependencies({ project, lang, title }) {
+async function dependencies({ project, lang, title, logger }) {
+  logger.info('setting up dependencies')
   const devDeps = {
     common: [
       "eslint@5.16.0",
@@ -19,13 +20,12 @@ async function dependencies({ project, lang, title }) {
       ],
       javascript: [],
       typescript: [
-        "concurrently",
-        "babel-jest",
-        "@babel/core",
-        "@babel/preset-env",
-        "@babel/preset-typescript",
+        "@types/jest",
         "@typescript-eslint/eslint-plugin",
         "@typescript-eslint/parser",
+        "concurrently",
+        "eslint-import-resolver-alias",
+        "ts-jest",
       ]
     },
     react: {
@@ -43,7 +43,11 @@ async function dependencies({ project, lang, title }) {
     node: {
       common: [],
       javascript: [],
-      typescript: ["typescript", "@types/node"],
+      typescript: [
+        "typescript",
+        "@types/node",
+        "module-alias",
+      ],
     },
     react: {
       common: [],
@@ -58,16 +62,23 @@ async function dependencies({ project, lang, title }) {
     ...deps[project][lang]
   ].sort();
 
+  logger.info('dependencies:')
+  logger.table(depsL)
+
+  const airbnbPack = project === 'node' ? 'eslint-config-airbnb-base@latest' : 'eslint-config-airbnb@latest';
+  logger.info(`fetching ${airbnbPack} peer dependencies`)
 
   const { stdout } = await execa('npm', [
-    'info',
-    project === 'node' ? 'eslint-config-airbnb-base@latest' :  'eslint-config-airbnb@latest',
-    'peerDependencies', '--json'
-  ])
+    'info', airbnbPack, 'peerDependencies', '--json'
+  ]);
+
   if (!stdout) {
-    return Promise.reject(new Error('Failed to fetch dependencies for airbn'));
+    return Promise.reject(new Error('Failed to fetch dependencies for airbnb'));
   }
+
   const airbnbDeps = Object.keys(JSON.parse(stdout)) // .filter(dep => dep !== 'eslint');
+  logger.info('airbnb dependencies:')
+  logger.table(airbnbDeps)
 
   const devDepsL = [
     ...devDeps.common,
@@ -75,6 +86,9 @@ async function dependencies({ project, lang, title }) {
     ...devDeps[project][lang],
     ...airbnbDeps
   ].sort();
+
+  logger.info('all dev dependencies:')
+  logger.table(devDepsL)
 
   if (depsL.length > 0) {
     console.log(chalk.blue('Installing Dependencies...'));

@@ -1,1 +1,4 @@
-export var a: string = 3;
+import { example } from '@utils/types';
+
+// deliberate ts error
+export var a: example = 3

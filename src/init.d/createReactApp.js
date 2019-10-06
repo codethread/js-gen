@@ -4,15 +4,18 @@ import chalk from 'chalk';
 export default createReactApp;
 
 async function createReactApp(options) {
-  console.log(chalk.blue('Create React App is doing it\'s magic...'));
+  try {
+    console.log(chalk.blue('Create React App is doing it\'s magic...'));
 
-  const result = await execa('create-react-app', [
-    options.title,
-    options.lang === 'typescript' ? '--typescript' : ''
-  ]);
+    const result = await execa('create-react-app', [
+      options.title,
+      options.lang === 'typescript' ? '--typescript' : ''
+    ]);
 
-  if (result.failed) {
-    return Promise.reject(new Error('Failed to run create-react-app'));
+    options.logger.info('create react app complete')
+  } catch (e) {
+    console.log(chalk.red('create-react-app'), ' not installed');
+    console.log('run:', chalk.cyan('npm i -g create-react-app'), 'to use react features');
+    process.exit(1);
   }
-  return;
 }
