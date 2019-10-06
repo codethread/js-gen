@@ -1,6 +1,6 @@
 {
   "name": "@ahdesigns/js-gen",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Scaffold a js or ts project",
   "main": "src/index.js",
   "repository": "ahdesigns/js-gen",
