@@ -4,6 +4,8 @@
   "description": "Scaffold a js or ts project",
   "main": "src/index.js",
   "repository": "ahdesigns/js-gen",
+  "bugs": "https://github.com/AHDesigns/js-gen/issues",
+  "homepage": "https://github.com/AHDesigns/js-gen#readme",
   "engines": {
     "node": "^8.12.0 || >=9.7.0"
   },
