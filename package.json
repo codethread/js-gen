@@ -21,11 +21,13 @@
   "keywords": [
     "javascript",
     "typescript",
+    "generator",
+    "boilerplate",
+    "scaffold",
     "node",
     "react",
-    "boilerplate",
-    "generator",
-    "scaffold"
+    "eslint",
+    "eslint-typescript"
   ],
   "author": "AHDesigns",
   "license": "MIT",
@@ -35,10 +37,8 @@
     "esm": "^3.2.25",
     "execa": "^2.0.4",
     "inquirer": "^7.0.0",
-    "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "ora": "^4.0.2",
-    "pkg-install": "^1.0.0",
     "semver": "^6.3.0"
   }
 }

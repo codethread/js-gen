@@ -41,8 +41,13 @@ export async function init(options_raw) {
     await dependencies(options);
 
     console.log('%s Project ready', chalk.green.bold('DONE'));
+    console.log('\nNow run:');
     console.log(chalk.cyan(`cd ${cwd}`));
     console.log(chalk.cyan('yarn dev'));
+
+    // for some reason the ora spinners won't exit
+    // very likely something in my dodgey awaits, but this will do for now
+    process.exit(0);
 
   } catch(e) {
     console.error(e);

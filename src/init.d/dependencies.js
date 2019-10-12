@@ -95,14 +95,12 @@ async function dependencies({ project, lang, title, logger }) {
     const spinner = ora(dep).start();
     await execa('yarn', ['add', dep], { cwd: title })
     spinner.succeed();
-    spinner.stop();
   })
 
   await asyncForEach(devDepsL, async dep => {
     const spinner = ora(dep).start();
-    await execa('yarn', ['add', '-D', dep], { cwd: title })
+    const res = await execa('yarn', ['add', '-D', dep], { cwd: title })
     spinner.succeed();
-    spinner.stop();
   })
 }
 

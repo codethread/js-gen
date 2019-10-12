@@ -11,14 +11,14 @@ $ npm i -g @ahdesigns/js-gen
 ## Usage
 ```bash
 # navigate to the parent directory where you want your project to live, e.g:
-$ cd ~/
+$ cd ~/dev
 
 # run the generator command:
 $ js-gen
 
 # follow the prompts (including giving your project a name)
 # once complete, you can cd into your newly created project directory, e.g:
-$ cd name-of-project
+$ cd ~/dev/name-of-project
 ```
 
 ## About
