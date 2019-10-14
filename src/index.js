@@ -3,12 +3,17 @@ import {init} from './init';
 import checkNodenv from './validateNode';
 import execa from 'execa';
 import logger from './logger';
+import version from './version';
 
 export async function cli(args) {
   try {
     checkNodenv();
 
-    const log = logger(args.includes('--verbose'));
+    if (args.includes('--version') || args.includes('-v')) {
+      version();
+      return;
+    }
+    const log = logger(args.includes('--debug'));
 
     log.info('js-gen startup')
     log.info('getting options')
