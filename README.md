@@ -1,4 +1,4 @@
-# Js Gen ![npm (scoped)](https://img.shields.io/npm/v/@ahdesigns/js-gen)
+# Js Gen ![npm (scoped)](https://img.shields.io/npm/v/@ahdesigns/js-gen) [![Coding time tracker](https://wakatime.com/badge/github/AHDesigns/js-gen.svg)](https://wakatime.com/badge/github/AHDesigns/js-gen)
 
 Javascript/ Typescript boilerplate generator for node and/or react projects.
 
