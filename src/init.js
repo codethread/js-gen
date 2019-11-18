@@ -34,7 +34,7 @@ export async function init(options_raw) {
 
     options.logger.info('copying files...');
     await copyFiles(getTemplates('common'));
-    await copyFiles(getTemplates(`${project}/common`));
+    project === 'react' && await copyFiles(getTemplates(`${project}/common`));
     await copyFiles(getTemplates(`${project}/${lang}`));
 
     await gitInit(options);
