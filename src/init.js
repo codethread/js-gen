@@ -4,7 +4,7 @@ import ncp from 'ncp';
 import path from 'path';
 import { promisify } from 'util';
 
-import git from './init.d/git';
+import { gitInit, gitIgnore } from './init.d/git';
 import dependencies from './init.d/dependencies';
 import nodeVersion from './init.d/nodeVersion';
 import packageJson from './init.d/packageJson';
@@ -30,13 +30,14 @@ export async function init(options_raw) {
 
     project === 'react' && await createReactApp(options)
     project === 'node' && await packageJson(options);
+    project === 'node' && await gitIgnore(options);
 
     options.logger.info('copying files...');
     await copyFiles(getTemplates('common'));
     await copyFiles(getTemplates(`${project}/common`));
     await copyFiles(getTemplates(`${project}/${lang}`));
 
-    await git(options);
+    await gitInit(options);
     await nodeVersion(options);
     await dependencies(options);
 
@@ -59,10 +60,15 @@ export async function init(options_raw) {
 // --------------------------------------------
 
 function copyTemplateFiles({ cwd: target, logger }) {
-  return template => {
+  return async template => {
     logger.info('creating template: ', template);
     logger.info('in target', target);
-    return promisify(ncp)(template, target, { clobber: true });
+
+    promisify(fs.access)(template, fs.constants.F_OK)
+      .then(() => {
+        promisify(ncp)(template, target, { clobber: true });
+      })
+      .catch(() => { logger.info(`${template} does not exist`)});
   }
 }
 
