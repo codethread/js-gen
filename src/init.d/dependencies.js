@@ -6,7 +6,7 @@ export default dependencies;
 
 const devDeps = {
   common: [
-    "eslint@5.16.0",
+    "eslint",
     "eslint-config-prettier",
     "eslint-plugin-prettier",
     "prettier",
