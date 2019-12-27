@@ -1,7 +1,7 @@
-import chalk from 'chalk';
-import { name, version } from '../package.json';
+const chalk = require('chalk');
+const { name, version } = require('../package.json');
 
-export default getVersion;
+module.exports = getVersion;
 
 function getVersion() {
   console.log(chalk.cyan(name), 'version:', chalk.yellow(version));

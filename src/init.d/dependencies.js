@@ -1,8 +1,8 @@
-import chalk from 'chalk';
-import execa from 'execa';
-import ora from 'ora';
+const chalk = require('chalk');
+const execa = require('execa');
+const ora = require('ora');
 
-export default dependencies;
+module.exports = dependencies;
 
 const devDeps = {
   common: [

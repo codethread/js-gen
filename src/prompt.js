@@ -1,6 +1,6 @@
-import inquirer from 'inquirer';
+const inquirer = require('inquirer');
 
-export function prompt() {
+module.exports = function prompt() {
   const questions = [
     {
       name: 'title',

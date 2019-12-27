@@ -1,7 +1,7 @@
-import fs from 'fs';
-import { promisify } from 'util';
+const fs = require('fs');
+const { promisify } = require('util');
 
-export default nodeVersion;
+module.exports = nodeVersion;
 
 function nodeVersion({ cwd, node_version, logger }) {
   logger.info('setting .node-version to: ', node_version)

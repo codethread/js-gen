@@ -1,8 +1,10 @@
-import execa from 'execa';
-import fs from 'fs';
-import { promisify } from 'util';
+const execa = require('execa');
+const fs = require('fs');
+const { promisify } = require('util');
 
-export async function gitInit({ cwd, logger }) {
+module.exports = { gitInit, gitIgnore };
+
+async function gitInit({ cwd, logger }) {
   logger.info('initialising git project')
   const result = await execa('git', ['init'], { cwd });
   if (result.failed) {
@@ -11,7 +13,7 @@ export async function gitInit({ cwd, logger }) {
   return;
 }
 
-export async function gitIgnore({ cwd, logger }) {
+async function gitIgnore({ cwd, logger }) {
   logger.info('creating gitignore file')
   const gitIgnoreString = `node_modules
 build

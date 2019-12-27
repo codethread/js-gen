@@ -1,11 +1,11 @@
-import {prompt} from './prompt';
-import {init} from './init';
-import checkNodenv from './validateNode';
-import execa from 'execa';
-import logger from './logger';
-import version from './version';
+const {prompt} = require('./prompt');
+const {init} = require('./init');
+const checkNodenv = require('./validateNode');
+const execa = require('execa');
+const logger = require('./logger');
+const version = require('./version');
 
-export async function cli(args) {
+module.exports = async function cli(args) {
   try {
     checkNodenv();
 

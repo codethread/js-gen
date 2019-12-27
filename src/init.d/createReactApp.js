@@ -1,7 +1,7 @@
-import execa from 'execa';
-import chalk from 'chalk';
+const execa = require('execa');
+const chalk = require('chalk');
 
-export default createReactApp;
+module.exports = createReactApp;
 
 async function createReactApp(options) {
   try {

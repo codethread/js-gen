@@ -1,16 +1,17 @@
-import fs from 'fs';
-import chalk from 'chalk';
-import ncp from 'ncp';
-import path from 'path';
-import { promisify } from 'util';
+const fs = require('fs');
+const chalk = require('chalk');
+const ncp = require('ncp');
+const path = require('path');
+const { promisify } = require('util');
 
-import { gitInit, gitIgnore } from './init.d/git';
-import dependencies from './init.d/dependencies';
-import nodeVersion from './init.d/nodeVersion';
-import packageJson from './init.d/packageJson';
-import createReactApp from './init.d/createReactApp';
+const { gitInit, gitIgnore } = require('./init.d/git');
+const dependencies = require('./init.d/dependencies');
+const nodeVersion = require('./init.d/nodeVersion');
+const packageJson = require('./init.d/packageJson');
+const createReactApp = require('./init.d/createReactApp');
 
-export async function init(options_raw) {
+modules.export = { init };
+async function init(options_raw) {
   const cwd = options_raw.title;
   const project = options_raw.project.toLowerCase()
   const lang = options_raw.language.toLowerCase()

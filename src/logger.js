@@ -7,4 +7,4 @@ function logger(debug) {
         );
   }
 
-export default logger;
+module.exports = logger;

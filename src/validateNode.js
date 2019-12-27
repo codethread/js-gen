@@ -1,10 +1,10 @@
-import chalk from 'chalk';
-import semver from 'semver';
-import { engines } from '../package.json';
+const chalk = require('chalk');
+const semver = require('semver');
+const { engines } = require('../package.json');
 
-export default checkNodenv;
+module.exports = checkNodenv;
 
-function checkNodenv() { 
+function checkNodenv() {
   const nodeVersion = engines.node;
 
   if (!semver.satisfies(process.version, nodeVersion)) {
