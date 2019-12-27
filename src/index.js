@@ -1,4 +1,4 @@
-const {prompt} = require('./prompt');
+const prompt = require('./prompt');
 const {init} = require('./init');
 const checkNodenv = require('./validateNode');
 const execa = require('execa');
