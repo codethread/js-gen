@@ -10,7 +10,7 @@ const nodeVersion = require('./init.d/nodeVersion');
 const packageJson = require('./init.d/packageJson');
 const createReactApp = require('./init.d/createReactApp');
 
-modules.export = { init };
+module.exports = { init };
 async function init(options_raw) {
   const cwd = options_raw.title;
   const project = options_raw.project.toLowerCase()
