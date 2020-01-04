@@ -23,7 +23,7 @@ $ cd ~/dev/name-of-project
 
 ## About
 
-Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with an opinionated setup including:
+Inspired by [create react app](https://github.com/facebook/create-react-app), quickly generate the boilerplate to run a typescript or javascript project with a slightly opinionated setup including:
 - eslint (with optional typescript support)
 - prettier
 - jest (with `ts-jest` for typescript)

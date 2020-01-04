@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 
-module.exports = function prompt() {
+module.exports = async function prompt() {
+  const node_version = process.versions.node;
+
   const questions = [
     {
       name: 'title',
@@ -22,23 +24,31 @@ module.exports = function prompt() {
       choices: ['Node', 'React'],
       default: 'Node',
     },
-    // {
-    //   name: 'git',
-    //   type: 'confirm',
-    //   message: 'Initialize a git repository?',
-    //   default: true,
-    // }
-  ]
-
-  const node_version = process.versions.node;
-  if (node_version) {
-    questions.push({
+    {
       name: 'node_version',
       type: 'input',
       message: 'Select node version',
-      default: node_version,
-    })
+      ...(node_version && { default: node_version }),
+    },
+  ];
+
+
+  let responses = await inquirer.prompt(questions);
+
+  if (responses.project === 'Node') {
+    const latestNode = '13.2.0';
+    const nodeConfig = await inquirer.prompt([
+      {
+        name: 'harmonyFlags',
+        type: 'checkbox',
+        message: `Harmony flags? (will force node version to ${latestNode})`,
+        choices: ['optionalChaining'],
+      },
+    ])
+    responses = { ...responses, ...nodeConfig };
+
+    if (nodeConfig.harmonyFlags) responses.node_version = latestNode;
   }
 
-  return inquirer.prompt(questions);
+  return responses;
 }

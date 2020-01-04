@@ -5,107 +5,100 @@ const ora = require('ora');
 module.exports = dependencies;
 
 const devDeps = {
-  common: [
-    "eslint",
-    "eslint-config-prettier",
-    "eslint-plugin-prettier",
-    "prettier",
-  ],
-  node: {
     common: [
-      "nodemon",
-      "jest",
-      "eslint-config-airbnb-base",
+        "eslint-config-prettier",
+        "eslint-plugin-prettier",
+        "prettier",
     ],
-    javascript: [],
-    typescript: [
-      "@types/jest",
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-      "concurrently",
-      "eslint-import-resolver-alias",
-      "ts-jest",
-    ]
-  },
-  react: {
-    common: ["eslint-config-airbnb"],
-    javascript: [],
-    typescript: [
-      '@typescript-eslint/parser',
-      '@typescript-eslint/eslint-plugin',
-    ],
-  }
+    node: {
+        common: [
+            "nodemon",
+            "jest",
+            "eslint-config-airbnb-base",
+        ],
+        javascript: [],
+        typescript: [
+            "@types/jest",
+            "@types/node",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "concurrently",
+            "eslint-import-resolver-alias",
+            "ts-jest",
+            "typescript",
+        ]
+    },
+    react: {
+        common: [],
+        javascript: [],
+        typescript: [],
+    }
 }
 
 const deps = {
-  common: [],
-  node: {
     common: [],
-    javascript: [],
-    typescript: [
-      "typescript",
-      "@types/node",
-      "module-alias",
-    ],
-  },
-  react: {
-    common: [],
-    javascript: [],
-    typescript: [],
-  }
+    node: {
+        common: [],
+        javascript: [],
+        typescript: [],
+    },
+    react: {
+        common: [],
+        javascript: [],
+        typescript: [],
+    }
 }
 
 async function dependencies({ project, lang, title, logger }) {
-  logger.info('setting up dependencies')
+    logger.info('setting up dependencies')
 
-  const depsL = [
-    ...deps.common,
-    ...deps[project].common,
-    ...deps[project][lang]
-  ].sort();
+    const depsL = [
+        ...deps.common,
+        ...deps[project].common,
+        ...deps[project][lang]
+    ].sort();
 
-  logger.info('dependencies:')
-  logger.table(depsL)
+    logger.info('dependencies:')
+    logger.table(depsL)
 
-  const airbnbPack = project === 'node' ? 'eslint-config-airbnb-base@latest' : 'eslint-config-airbnb@latest';
-  logger.info(`fetching ${airbnbPack} peer dependencies`)
+    const devDepsL = [
+        ...devDeps.common,
+        ...devDeps[project].common,
+        ...devDeps[project][lang],
+    ].sort();
 
-  const { stdout } = await execa('npm', [
-    'info', airbnbPack, 'peerDependencies', '--json'
-  ]);
+    if (project === 'node') {
+        const airbnbPack = 'eslint-config-airbnb-base@latest';
+        logger.info(`fetching ${airbnbPack} peer dependencies`)
 
-  const airbnbDeps = Object.keys(JSON.parse(stdout)) // .filter(dep => dep !== 'eslint');
+        const { stdout } = await execa('npm', [
+            'info', airbnbPack, 'peerDependencies', '--json'
+        ]);
 
-  logger.info('airbnb dependencies:')
-  logger.table(airbnbDeps)
+        const airbnbDeps = Object.keys(JSON.parse(stdout)) // .filter(dep => dep !== 'eslint');
 
-  const devDepsL = [
-    ...devDeps.common,
-    ...devDeps[project].common,
-    ...devDeps[project][lang],
-    ...airbnbDeps
-  ].sort();
+        logger.info('airbnb dependencies:')
+        logger.table(airbnbDeps)
 
-  logger.info('all dev dependencies:')
-  logger.table(devDepsL)
+        devDepsL.push(...airbnbDeps)
+    }
 
-  console.log('\nInstalling Dependencies...')
+    logger.info('all dev dependencies:')
+    logger.table(devDepsL)
 
-  await asyncForEach(depsL, async dep => {
-    const spinner = ora(dep).start();
-    await execa('yarn', ['add', dep], { cwd: title })
-    spinner.succeed();
-  })
+    if (depsL.length > 0) {
+        await installer(depsL);
+    }
 
-  await asyncForEach(devDepsL, async dep => {
-    const spinner = ora(dep).start();
-    const res = await execa('yarn', ['add', '-D', dep], { cwd: title })
-    spinner.succeed();
-  })
-}
+    if (devDepsL.length > 0) {
+        await installer(devDepsL, true);
+    }
 
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
+    async function installer(packages, isDev) {
+        console.log('');
+        const spinner = ora(`Installing ${isDev ? 'Dev ' : ''}Dependencies...`).start();
+        console.log(packages.join('\n'));
+        await execa('yarn', ['add', ...packages], { cwd: title })
+        spinner.succeed();
+    }
 }

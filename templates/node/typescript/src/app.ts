@@ -1,4 +1,5 @@
-import { example } from '@utils/types';
+import { example } from 'utils/types';
 
 // deliberate ts error
-export var a: example = 3
+var a: example = 3
+export default a;

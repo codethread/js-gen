@@ -4,37 +4,33 @@ const { promisify } = require('util');
 module.exports = packageJson;
 
 // react creates its own package.json, so only language matters
-function packageJson({ title: cwd, node_version, language, logger }) {
+function packageJson({ title: cwd, node_version, lang, project, logger, harmonyFlags = [] }) {
   logger.info('constructing package.json in folder: ', cwd);
-  const isTypescript = language.toLowerCase() === 'typescript'
+  const isTypescript = lang === 'typescript'
+  const isReact = lang === 'react'
+  const dir = isTypescript ? "dist/" : "src/";
   logger.info(`using template isTypescript: ${isTypescript}`);
+
+  const fileExtensions = [isTypescript ? 'ts' : 'js'];
+  if (isReact) fileExtensions.push(isTypescript ? 'tsx' : 'jsx');
 
   const pj = {
     name: cwd,
     version: '1.0.0',
-    description: '',
-    main: isTypescript ? 'dist/app.js' : 'src/app.js',
-    ...(isTypescript && {
-      "_moduleAliases": {
-        "@utils": "dist/utils"
-      },
-    }),
+    description: cwd,
     scripts: {
-      "start": "NODE_ENV=PROD node src/app.js",
-      "nuke": "git clean -dfX",
+      "start": `NODE_PATH=${dir} node${harmonyFlags.includes('optionalChaining') ? ' --harmony-optional-chaining' : ''} ${dir}index.js`,
       "test": "NODE_ENV=TEST jest",
       ...(isTypescript ? {
-        "dev": "NODE_ENV=DEV concurrently -k -c cyan.bold,green.bold -p [{name}] -n TypeScript,Node npm:watch-ts npm:watch-node ",
-        "lint": "eslint src/**/*.{ts,tsx}",
-        "lint-fix": "eslint --fix src/**/*.{ts,tsx}",
-        "predev": "tsc",
-        "watch-node": "NODE_ENV=DEV nodemon dist/app.js",
-        "watch-ts": "tsc --watch"
+        "dev": "concurrently -k -c cyan.bold,green.bold -p [{name}] -n TypeScript,Node 'npm:watch:ts -- --preserveWatchOutput' 'npm:watch:js -- --delay 2.5'",
+        "watch:js": "nodemon",
+        "watch:ts": "tsc -w --project tsconfig.app.json",
       } : {
-          "dev": "NODE_ENV=DEV nodemon src/app.js",
-          "lint": "eslint src/**/*.{js,jsx}",
-          "lint-fix": "eslint --fix src/**/*.{js,jsx}"
-        })
+          "dev": "nodemon",
+        }),
+      "lint": `eslint ${fileExtensions.map(ext => '--ext .' + ext)} --config ./.eslintrc.js ./src ./test`,
+      "lint:fix": "npm run lint -- --fix",
+      "nuke": "git clean -dfX",
     },
   };
   const asString = JSON.stringify(pj, null, 2)

@@ -1,5 +1,5 @@
-import { a } from './app';
+import app from './app';
 
 it('runs test', () => {
-  expect(a).toBe(3);
-});;
+    expect(app).toBe(3);
+});
