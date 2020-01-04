@@ -1,7 +1,9 @@
 const fs = require('fs');
 const { exec } = require('child_process');
 
-module.exports = function adjustReactConfig({ logger, title: cwd }) {
+module.exports = function adjustReactConfig({ logger, title: cwd, lang }) {
+    const isTypescript = lang === 'typescript';
+
     logger.info('adjusting react config');
     logger.info('adjusting package json');
     const pj = getJson('package');
@@ -12,11 +14,13 @@ module.exports = function adjustReactConfig({ logger, title: cwd }) {
     logger.info('adding lint commands');
     pj.scripts = {
         ...pj.scripts,
-        lint: 'eslint --ext ts,tsx ./src',
+        lint: `eslint --ext ${isTypescript ? 'ts,tsx' : 'js,jsx'} ./src`,
         'lint:fix': 'npm run lint -- --fix'
     }
 
     writeJson('package', pj);
+
+    if (!isTypescript) return;
 
     logger.info('adjusting tsconfig');
     const tsconfig = getJson('tsconfig');

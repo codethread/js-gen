@@ -13,5 +13,21 @@ module.exports = {
     node: true,
     jest: true
   },
-  settings: {}
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          // If not a child of src, add parent folder to NODE_PATH env
+          ['utils', './src/utils'],
+          ['shared', './src/shared'],
+          ['src', './src'],
+          ['test', './test/utils'],
+        ],
+        extensions: ['.js']
+      },
+      node: {
+        extensions: ['.js']
+      }
+    }
+  },
 }

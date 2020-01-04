@@ -15,6 +15,7 @@ const devDeps = {
             "nodemon",
             "jest",
             "eslint-config-airbnb-base",
+            "eslint-import-resolver-alias",
         ],
         javascript: [],
         typescript: [
@@ -23,7 +24,6 @@ const devDeps = {
             "@typescript-eslint/eslint-plugin",
             "@typescript-eslint/parser",
             "concurrently",
-            "eslint-import-resolver-alias",
             "ts-jest",
             "typescript",
         ]

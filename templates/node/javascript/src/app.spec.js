@@ -1,5 +1,5 @@
-const a = require('./app');
+const app = require('./app');
 
 it('runs test', () => {
-  expect(a).toBe(3);
+  expect(app).toBe(7);
 });;

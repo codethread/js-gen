@@ -1,3 +1,4 @@
+const { foo } = require('utils/helper');
 var a = 3;
 
-module.exports = a;
+module.exports = a + foo;
