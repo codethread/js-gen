@@ -8,7 +8,7 @@ function nodemon({ lang, logger, title: cwd }) {
     const isTypescript = lang === 'typescript';
     logger.info(`using template isTypescript: ${isTypescript}`);
 
-    const dir = "src/",
+    const dir = "src/";
 
     const f = {
         watch: [dir],

@@ -1,5 +1,5 @@
 import { example } from 'utils/types';
 
-// deliberate ts error
-var a: example = 3
+var a: example = { str: 'hello', num: 3 };
+
 export default a;
