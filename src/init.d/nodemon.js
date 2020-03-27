@@ -8,7 +8,7 @@ function nodemon({ lang, logger, title: cwd }) {
     const isTypescript = lang === 'typescript';
     logger.info(`using template isTypescript: ${isTypescript}`);
 
-    const dir = isTypescript ? "dist/" : "src/";
+    const dir = "src/",
 
     const f = {
         watch: [dir],
@@ -16,7 +16,8 @@ function nodemon({ lang, logger, title: cwd }) {
             "NODE_ENV": "dev",
             "NODE_PATH": dir
         },
-        ext: "js json"
+        ...(isTypescript && { exec: 'ts-node ./src/index.ts' }),
+        ext: `${isTypescript ? 'ts' : 'js'} json`
     }
     const asString = JSON.stringify(f, null, 2)
     logger.info('nodemon.json:', asString);

@@ -22,9 +22,7 @@ function packageJson({ title: cwd, node_version, lang, project, logger, harmonyF
             "start": `NODE_PATH=${dir} node${harmonyFlags.includes('optionalChaining') ? ' --harmony-optional-chaining' : ''} ${dir}index.js`,
             "test": "NODE_ENV=TEST jest",
             ...(isTypescript ? {
-                "dev": "concurrently -k -c cyan.bold,green.bold -p [{name}] -n TypeScript,Node 'npm:watch:ts -- --preserveWatchOutput' 'npm:watch:js -- --delay 2.5'",
-                "watch:js": "nodemon",
-                "watch:ts": "tsc -w --project tsconfig.app.json",
+                "ts": "tsc --project tsconfig.app.json --noEmit",
             } : {
                 "dev": "nodemon",
             }),

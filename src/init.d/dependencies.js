@@ -23,7 +23,7 @@ const devDeps = {
             "@types/node",
             "@typescript-eslint/eslint-plugin",
             "@typescript-eslint/parser",
-            "concurrently",
+            "ts-node",
             "ts-jest",
             "typescript",
         ]

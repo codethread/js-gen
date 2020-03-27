@@ -11,7 +11,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
-    'no-console': 'error',
+    'no-console': 'off',
     'prettier/prettier': 'error',
     '@typescript-eslint/explicit-function-return-type': 'error',
     'no-var': 'off',
