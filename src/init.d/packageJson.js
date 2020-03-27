@@ -21,11 +21,10 @@ function packageJson({ title: cwd, node_version, lang, project, logger, harmonyF
         scripts: {
             "start": `NODE_PATH=${dir} node${harmonyFlags.includes('optionalChaining') ? ' --harmony-optional-chaining' : ''} ${dir}index.js`,
             "test": "NODE_ENV=TEST jest",
-            ...(isTypescript ? {
+            ...(isTypescript && {
                 "ts": "tsc --project tsconfig.app.json --noEmit",
-            } : {
-                "dev": "nodemon",
             }),
+            "dev": "nodemon",
             "lint": `eslint ${fileExtensions.map(ext => '--ext .' + ext)} --config ./.eslintrc.js ./src ./test`,
             "lint:fix": "npm run lint -- --fix",
             "nuke": "git clean -dfX",
